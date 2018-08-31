@@ -9,8 +9,8 @@ import lombok.ToString;
 @NoArgsConstructor
 public class Rectangle
 {
-	private int x;
-	private int y;
-	private int w;
-	private int h;
+	private Integer x;
+	private Integer y;
+	private Integer w;
+	private Integer h;
 }
