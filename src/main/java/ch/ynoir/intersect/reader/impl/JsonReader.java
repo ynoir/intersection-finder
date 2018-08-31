@@ -7,6 +7,7 @@ import java.util.List;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import org.codehaus.jackson.map.DeserializationConfig.Feature;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import ch.ynoir.intersect.model.Rectangle;
@@ -26,8 +27,22 @@ public class JsonReader implements Reader
 	public List<Rectangle> read(String path) throws IOException
 	{
 		ObjectMapper mapper = new ObjectMapper();
+		mapper.configure(Feature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		RootObject rootObject = mapper.readValue(new File(path), RootObject.class);
-		return rootObject.getRects();
+
+		List<Rectangle> rects = rootObject.getRects();
+		validate(rects);
+		return rects;
 	}
 
+	private void validate(List<Rectangle> rects) throws IOException
+	{
+		for (Rectangle rect : rects) {
+			if (rect.getX() == null || rect.getY() == null 
+					|| rect.getW() == null || rect.getH() == null)
+			{
+				throw new IOException("Missing value.");
+			}
+		}
+	}
 }

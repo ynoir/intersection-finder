@@ -52,4 +52,29 @@ class JsonReaderTest
 		});
 	}
 
+
+	@Test
+	void shouldThrowErrorOnInvalidInput_missingFields()
+	{
+		assertThrows(IOException.class, () ->
+		{
+			List<Rectangle> read = new JsonReader().read(RESOURCE_FOLDER + "input_invalid2.json");
+			for (Rectangle rect : read) {
+				System.out.println(rect);
+			}
+		});
+	}
+
+	@Test
+	void shouldReadJsonInput_additionalValues() throws IOException
+	{
+		// given
+		Reader reader = new JsonReader();
+		// when
+		List<Rectangle> rectangles = reader.read(RESOURCE_FOLDER + "input_additional_values.json");
+		// then
+		assertThat(rectangles, hasSize(1));
+		assertThat(rectangles.get(0), hasToString("Rectangle(x=100, y=100, w=250, h=80)"));
+	}
+
 }
