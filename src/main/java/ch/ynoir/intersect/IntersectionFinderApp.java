@@ -43,21 +43,49 @@ public class IntersectionFinderApp
 		try
 		{
 			// input
-			Reader reader = new JsonReader();
-			List<Rectangle> rectangles = reader.read(inputFilePath);
+			List<Rectangle> rectangles = readInputFile(inputFilePath);
 			// processing
 			Set<Orthotope> orthotopes = toOrthotopes(rectangles);
 			Set<Orthotope> intersections = new SimpleOrthotopeIntersectionFinder().find(orthotopes);
 			// output
 			new PrintStreamWriter(System.out).write(rectangles, orthotopes, intersections);
-			if (htmlOutputPath.isPresent())
-			{
-				new HtmlWriter(htmlOutputPath.get()).write(rectangles, orthotopes, intersections);
-			}
+			writeHtmlOutput(htmlOutputPath, rectangles, orthotopes, intersections);
 
 		} catch (IOException e)
 		{
 			e.printStackTrace();
+		}
+	}
+
+
+	private void writeHtmlOutput(Optional<String> htmlOutputPath, List<Rectangle> rectangles, Set<Orthotope> orthotopes,
+			Set<Orthotope> intersections)
+	{
+		try
+		{
+			if (htmlOutputPath.isPresent())
+			{
+					new HtmlWriter(htmlOutputPath.get()).write(rectangles, orthotopes, intersections);
+			}
+		} catch (IOException e)
+		{
+			System.err.println("Could not write to file: " + e.getMessage());
+			System.exit(-1);
+		}
+	}
+
+
+	private List<Rectangle> readInputFile(String inputFilePath)
+	{
+		try
+		{
+			Reader reader = new JsonReader();
+			return reader.read(inputFilePath);
+		} catch (IOException e)
+		{
+			System.err.println("Could not read input file: " + e.getMessage());
+			System.exit(-1);
+			return null;
 		}
 	}
 

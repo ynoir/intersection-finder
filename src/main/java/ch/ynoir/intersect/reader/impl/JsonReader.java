@@ -28,6 +28,10 @@ public class JsonReader implements Reader
 
 	private void validate(List<Rectangle> rects) throws IOException
 	{
+		if (rects == null)
+		{
+			throw new IOException("No rects array found.");			
+		}
 		for (Rectangle rect : rects) {
 			if (rect.getX() == null || rect.getY() == null 
 					|| rect.getW() == null || rect.getH() == null)
