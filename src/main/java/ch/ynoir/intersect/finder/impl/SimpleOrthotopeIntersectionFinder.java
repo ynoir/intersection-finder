@@ -12,6 +12,13 @@ import ch.ynoir.intersect.model.Edge;
 import ch.ynoir.intersect.model.Orthotope;
 import ch.ynoir.intersect.model.Pair;
 
+/**
+ * Finds intersections of {@link Orthotope}s as such:
+ * 1) build pairs of orthotopes
+ * 2) find intersection by checking if all {@link Edge}s intersect
+ * 3) restart at 1) with the intersections; collect all intersections
+ * 4) return result when no more intersections are found
+ */
 public class SimpleOrthotopeIntersectionFinder implements OrthotopeIntersectionFinder
 {
 

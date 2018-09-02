@@ -11,6 +11,11 @@ import ch.ynoir.intersect.model.Pair;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+/**
+ * Finds intersections of 1-dimensional {@link Edge}s by ordering the 
+ * edge points and checking if the second edge starts before the first 
+ * one ends.
+ */
 public class SimpleEdgeIntersectionFinder implements EdgeIntersectionFinder
 {
 
