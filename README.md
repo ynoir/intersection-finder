@@ -5,6 +5,7 @@ This app find intersections of rectangles.
 # Requirements
 
 * JDK 8 (tested with openJDK)
+* Lombok IDE plugin (only needed for development in an IDE)
 
 # Building
 
